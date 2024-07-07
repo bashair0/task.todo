@@ -1,6 +1,7 @@
 :root {
   --clr-white: hsl(100, 100%, 100%);
   --clr-black: hsl(0, 0%, 0%);
+  --clr-red: hsl(0, 100%, 50%);
   --clr-dark-blue: hsl(237, 55%, 15%);
   --clr-light-blue: hsl(203, 78%, 91%);
   --clr-pale-purple: hsl(289, 100%, 97%);
@@ -37,15 +38,45 @@
   background-color: var(--clr-dark-blue);
   color: var(--clr-white);
   padding: 2rem;
+  /* border-radius: 0 50px 50px 0; */
 }
+
+/* body {
+  background-color: var(--clr-dark-blue);
+} */
 
 .main {
   background-color: var(--clr-very-light-grey);
-  /* border-radius: 20px; */
+  padding: 2rem 2rem 0 2rem;
+}
+
+.main,
+.aside {
+  border-radius: 50px 0 0 50px;
+  position: relative;
+}
+
+.main::before,
+.aside::before {
+  content: "";
+  height: 100vh;
+  width: 6rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.main::before {
+  background-color: var(--clr-dark-blue);
 }
 
 .aside {
   background-color: var(--clr-white);
+}
+
+.aside::before {
+  background-color: var(--clr-very-light-grey);
 }
 
 .nav {
@@ -89,6 +120,96 @@ li {
   margin-top: 3rem;
 }
 
+.search-bar {
+  flex: 1;
+}
+
+.search-bar input {
+  padding: 1rem 2rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 10px;
+  height: 30px;
+  width: 100%;
+  background-image: url(./assets/icons/magnify.svg);
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 10px center;
+}
+
+.search-bar input:focus {
+  outline: 1px solid var(--clr-dark-grey);
+}
+
+.notification-btn {
+  background-image: url(./assets/icons/notification.svg);
+  height: 30px;
+  width: 30px;
+  background-size: 30px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.priority-section,
+.taskslist-section {
+  margin-top: 2rem;
+}
+
+.priority-cards,
+.tasks-list {
+  margin-top: 1.2rem;
+}
+
+.priority-card {
+  height: 8rem;
+  width: 15rem;
+  padding: 1rem;
+
+  border-radius: 20px;
+
+  > p {
+    color: var(--clr-dark-grey);
+  }
+}
+
+.card-1 {
+  background-color: var(--clr-light-red);
+}
+
+.card-2 {
+  background-color: var(--clr-light-purple);
+}
+
+.card-3 {
+  background-color: var(--clr-pale-purple);
+}
+
+.card-4 {
+  background-color: var(--clr-light-blue);
+}
+
+.card-title {
+  color: var(--clr-dark-blue);
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.due-date {
+  background-color: var(--clr-white);
+  color: var(--clr-red);
+  font-size: 0.8rem;
+  padding-inline: 0.5rem;
+  border-radius: 50px;
+}
+
+.task-card {
+  width: 80%;
+  border-radius: 20px;
+  padding: 1rem;
+  background-color: var(--clr-white);
+  justify-content: space-between;
+}
+
 body {
   min-height: 100vh;
   font-family: monospace;
@@ -105,6 +226,10 @@ button {
   color: inherit;
   font-size: inherit;
   text-transform: inherit;
+}
+
+a {
+  text-decoration: none;
 }
 
 *,
