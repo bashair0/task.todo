@@ -24,7 +24,10 @@
 }
 
 .container {
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: minmax(230px, 1fr) minmax(700px, 980px) minmax(
+      300px,
+      1fr
+    );
   min-height: 100vh;
 }
 
@@ -47,13 +50,13 @@
 
 .main {
   background-color: var(--clr-very-light-grey);
-  padding: 2rem 2rem 0 2rem;
 }
 
 .main,
 .aside {
   border-radius: 50px 0 0 50px;
   position: relative;
+  padding: 2rem 2rem 0 2rem;
 }
 
 .main::before,
@@ -73,6 +76,8 @@
 
 .aside {
   background-color: var(--clr-white);
+  align-content: space-between;
+  padding-bottom: 2rem;
 }
 
 .aside::before {
@@ -90,7 +95,8 @@ li {
   margin-bottom: 1rem;
 }
 
-.nav-btn {
+.nav-btn,
+.add-list-btn {
   > svg {
     fill: var(--clr-dark-grey);
   }
@@ -108,7 +114,8 @@ li {
 }
 
 .active-btn,
-.nav-btn:hover {
+.nav-btn:hover,
+.add-list-btn:hover {
   color: var(--clr-white);
 
   > svg {
@@ -118,7 +125,18 @@ li {
 
 .my-lists {
   margin-top: 3rem;
+
+  > .flex {
+    justify-content: space-between;
+  }
 }
+
+/* .add-list-btn {
+  height: 20px;
+  width: 20px;
+  background-image: url(./assets/icons/plus.svg);
+  background-position: center;
+} */
 
 .search-bar {
   flex: 1;
@@ -155,6 +173,14 @@ li {
   margin-top: 2rem;
 }
 
+.priority-cards {
+  overflow-x: scroll;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(15rem, 1fr);
+  gap: 1rem;
+}
+
 .priority-cards,
 .tasks-list {
   margin-top: 1.2rem;
@@ -172,19 +198,15 @@ li {
   }
 }
 
-.card-1 {
+.urgent-important {
   background-color: var(--clr-light-red);
 }
 
-.card-2 {
+.urgent {
   background-color: var(--clr-light-purple);
 }
 
-.card-3 {
-  background-color: var(--clr-pale-purple);
-}
-
-.card-4 {
+.important {
   background-color: var(--clr-light-blue);
 }
 
@@ -210,9 +232,38 @@ li {
   justify-content: space-between;
 }
 
+.tasks-list {
+  overflow-y: scroll;
+
+  height: 300px;
+}
+
+.priority-cards,
+.tasks-list {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.priority-cards::-webkit-scrollbar,
+.tasks-list::-webkit-scrollbar {
+  display: none;
+}
+
+.add-btn {
+  background-color: var(--clr-black);
+  color: var(--clr-white);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  padding-block: 1rem;
+  width: 100%;
+}
+
 body {
   min-height: 100vh;
   font-family: monospace;
+  overflow: hidden;
 }
 
 ul {

@@ -80,7 +80,8 @@
 
           <ul class="my-lists">
             <div class="flex">
-              <svg
+              <div class="flex">
+                <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
                 height="30"
@@ -98,21 +99,12 @@
                   stroke-width="5"
                   d="M47 44H66M47 56H66M47 68H66M29 41.9388C29.3967 42.3382 30.3056 43.2533 31.331 44.2856 31.7221 44.6794 32.359 44.6794 32.75 44.2857L38 39M29 53.9388C29.3967 54.3382 30.3056 55.2533 31.331 56.2856 31.7221 56.6794 32.359 56.6794 32.75 56.2857L38 51M29 65.9388C29.3967 66.3382 30.3056 67.2533 31.331 68.2856 31.7221 68.6794 32.359 68.6794 32.75 68.2857L38 63"></path>
               </svg>
-              My lists
+              <h3>My lists</h2>
+              </div>
+              <button type="button" class="add-list-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="plus"><path d="M12 5a1 1 0 0 0-1 1v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5V6a1 1 0 0 0-1-1Z"></path></svg>
+              </button>
             </div>
-
-            <!-- <li class="mylist-item flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                id="chevron-right"
-                height="30"
-                width="30">
-                <path
-                  d="M10,17a1,1,0,0,1-.71-1.71L12.59,12,9.29,8.71a1,1,0,0,1,1.41-1.41l4,4a1,1,0,0,1,0,1.41l-4,4A1,1,0,0,1,10,17Z"></path>
-              </svg>
-              Project 1
-            </li> -->
           </ul>
         </nav>
       </header>
@@ -125,8 +117,29 @@
             <!-- <span aria-hidden="true">notifications</span> -->
           </button>
         </div>
+
+        <div class="priority-section">
+          <h2>High priority tasks:</h2>
+          <ul class="priority-cards grid">
+    
+          </ul>
+        </div>
+        <div class="taskslist-section">
+          <h2>My tasks:</h2>
+          <ul class="tasks-list">
+            
+           
+          </ul>
+        </div>
+        </section>
+      <section class="aside grid">
+        <div class="calendar">
+          <h2>July 2024</h2>
+        </div>
+        <div class="cta-btn">
+          <button type="button" class="btn add-btn">Add a new task</button>
+        </div>
       </section>
-      <section class="aside"></section>
     </div>
   </body>
 </html>
