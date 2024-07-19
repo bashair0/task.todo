@@ -78,10 +78,9 @@
             </li>
           </ul>
 
-          <ul class="my-lists">
+          <h3 class="my-lists flex">
             <div class="flex">
-              <div class="flex">
-                <svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
                 height="30"
@@ -99,39 +98,89 @@
                   stroke-width="5"
                   d="M47 44H66M47 56H66M47 68H66M29 41.9388C29.3967 42.3382 30.3056 43.2533 31.331 44.2856 31.7221 44.6794 32.359 44.6794 32.75 44.2857L38 39M29 53.9388C29.3967 54.3382 30.3056 55.2533 31.331 56.2856 31.7221 56.6794 32.359 56.6794 32.75 56.2857L38 51M29 65.9388C29.3967 66.3382 30.3056 67.2533 31.331 68.2856 31.7221 68.6794 32.359 68.6794 32.75 68.2857L38 63"></path>
               </svg>
-              <h3>My lists</h2>
-              </div>
-              <button type="button" class="add-list-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="plus"><path d="M12 5a1 1 0 0 0-1 1v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5V6a1 1 0 0 0-1-1Z"></path></svg>
-              </button>
+              My lists
             </div>
+            <button type="button" class="list-plus__btn" data-plus-btn>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                id="plus">
+                <path
+                  d="M12 5a1 1 0 0 0-1 1v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5V6a1 1 0 0 0-1-1Z"></path>
+              </svg>
+            </button>
+          </h3>
+          <form action="post" class="flex hidden" data-list-form>
+            <input
+              type="text"
+              name="list-name"
+              id="list-name"
+              class="list-name__input"
+              data-add-list-input />
+            <button type="submit" class="add-list__btn" data-add-list-btn>
+              Add
+            </button>
+          </form>
+          <ul class="lists" data-my-lists>
+            <li class="flex">
+              Home work
+              <button type="button" data-delete-list-btn>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  height="20"
+                  width="20"
+                  id="cross">
+                  <path
+                    d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
+                </svg>
+              </button>
+            </li>
           </ul>
         </nav>
       </header>
       <section class="main">
         <div class="main-header flex">
           <div class="search-bar flex">
-            <input type="text" placeholder="Search for ..." />
+            <input type="text" name="search" placeholder="Search for ..." />
           </div>
-          <button type="button" class="notification-btn">
-            <!-- <span aria-hidden="true">notifications</span> -->
-          </button>
+          <button
+            type="button"
+            class="notification-btn"
+            aria-label="notifications"></button>
         </div>
 
         <div class="priority-section">
           <h2>High priority tasks:</h2>
           <ul class="priority-cards grid">
-    
+            <li class="priority-card urgent">
+              <a href="">
+                <h3 class="card-title flex">
+                  Title <span class="due-date">7.7.2024</span>
+                </h3>
+
+                <p class="card-description">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="taskslist-section">
           <h2>My tasks:</h2>
           <ul class="tasks-list">
-            
-           
+            <li class="task-card flex">
+              <div class="flex">
+                <input type="checkbox" name="checked" id="task" />
+                <label for="task"><h3>Title</h3></label>
+              </div>
+              <span>Project name</span>
+              <span class="due-date">7.7.2024</span>
+            </li>
           </ul>
         </div>
-        </section>
+      </section>
       <section class="aside grid">
         <div class="calendar">
           <h2>July 2024</h2>
