@@ -1,3 +1,5 @@
+import Task from './task'
+
 export default class List {
   constructor (listName) {
     this.id = this.generateUniqueId()

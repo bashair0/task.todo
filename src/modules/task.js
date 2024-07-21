@@ -1,12 +1,11 @@
 export default class Task {
-  constructor (name, description, dueDate, priority, note) {
+  constructor (name, description, dueDate, priority, parentListId) {
     this.id = this.generateUniqueId()
     ;(this.name = name),
       (this.description = description),
       (this.dueDate = dueDate),
       (this.priority = priority),
-      (this.note = note),
-      (this.completed = false)
+      (this.parentListId = parentListId((this.completed = false)))
   }
 
   generateUniqueId () {
@@ -19,5 +18,18 @@ export default class Task {
   toggleCompleted () {
     this.completed = !this.completed
     return this.completed
+  }
+
+  static fromJSON (json) {
+    const task = new Task(
+      json.id,
+      json.name,
+      json.description,
+      json.dueDate,
+      json.priority,
+      json.parentProjectId
+    )
+    task.completed = json.completed
+    return task
   }
 }
