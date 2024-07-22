@@ -183,6 +183,70 @@
         </div>
       </section>
     </div>
+    <div class="task-form hidden" data-task-form-container>
+      <form action="post" class="form-container">
+        <div class="form-header flex">
+          <h1>Add task</h1>
+          <button type="button" data-close-form-btn>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              height="20"
+              width="20"
+              id="cross">
+              <path
+                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
+            </svg>
+          </button>
+        </div>
+        <label for="task-name"
+          ><span aria-label="required">*</span> Task name:
+        </label>
+        <input
+          type="text"
+          placeholder="Task name"
+          id="task-name"
+          name="task-name"
+          required
+          data-task-name-input />
+        <label for="task-description">Task description: </label>
+        <textarea
+          name="task-description"
+          id="task-description"
+          data-task-desc-input></textarea>
+        <div class="flex">
+          <legend><span aria-label="required">*</span> Priority:</legend>
+          <label for="high">High</label>
+          <input type="radio" name="priority" id="high" value="high" />
+          <label for="mid">Mid</label>
+          <input type="radio" name="priority" id="mid" value="mid" />
+          <label for="low">Low</label>
+          <input type="radio" name="priority" id="low" value="low" />
+        </div>
+        <div>
+          <label for="due-date"
+            ><span aria-label="required">*</span> Due date:
+          </label>
+          <input
+            type="date"
+            name="due-date"
+            id="due-date"
+            required
+            data-due-date-input />
+        </div>
+
+        <div>
+          <label for="parent-list">Parent list: </label>
+          <select name="parent-list" id="parent-list" data-parent-list-input>
+            <option value="inbox">inbox</option>
+          </select>
+        </div>
+
+        <button type="submit" class="add-task__btn" data-submit-task-btn>
+          Add
+        </button>
+      </form>
+    </div>
 
     <template data-task-card-template>
       <li class="task-card completed-task">

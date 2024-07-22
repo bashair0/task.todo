@@ -43,10 +43,17 @@ export default class Storage {
 
   static addTask (task) {
     const tasks = this.loadTasks()
-    if (!tasks.some(element => element.id === tasks.id)) {
+    if (!tasks.some(element => element.id === task.id)) {
       tasks.push(task)
       this.saveTasks()
     }
+  }
+
+  static renderTasks () {
+    let tasks = this.loadTasks()
+    tasks.array.forEach(element => {
+      console.log(element)
+    })
   }
 
   static clear () {
