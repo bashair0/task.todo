@@ -1,14 +1,16 @@
-import List from '../modules/lists'
+/* import List from '../modules/lists' */
 
 export default class Storage {
+  static LOCAL_STORAGE_LIST_KEY = 'task.lists'
+  static LOCAL_STORAGE_TASK_KEY = 'task'
   static loadLists () {
-    const LOCAL_STORAGE_LIST_KEY = 'task.lists'
-    let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || []
+    let lists =
+      JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_LIST_KEY)) || []
     return lists
   }
 
   static saveLists (lists) {
-    localStorage.setItem('task.lists', JSON.stringify(lists))
+    localStorage.setItem(this.LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists))
   }
 
   static getLists () {
@@ -27,6 +29,24 @@ export default class Storage {
     let lists = this.loadLists()
     lists = lists.filter(lst => lst.id !== listId)
     this.saveLists(lists)
+  }
+
+  static loadTasks () {
+    let tasks =
+      JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_TASK_KEY)) || []
+    return tasks
+  }
+
+  static saveTasks (tasks) {
+    localStorage.setItem(this.LOCAL_STORAGE_TASK_KEY, JSON.stringify(tasks))
+  }
+
+  static addTask (task) {
+    const tasks = this.loadTasks()
+    if (!tasks.some(element => element.id === tasks.id)) {
+      tasks.push(task)
+      this.saveTasks()
+    }
   }
 
   static clear () {

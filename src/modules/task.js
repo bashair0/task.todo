@@ -5,7 +5,8 @@ export default class Task {
       (this.description = description),
       (this.dueDate = dueDate),
       (this.priority = priority),
-      (this.parentListId = parentListId((this.completed = false)))
+      (this.parentListId = parentListId),
+      (this.complete = false)
   }
 
   generateUniqueId () {

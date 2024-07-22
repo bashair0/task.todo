@@ -256,17 +256,37 @@ li {
 }
 
 .task-card {
-  width: 80%;
+  display: grid;
+  grid-template-columns: 1rem 3fr 1fr 1fr 1rem;
+  grid-template-rows: repeat(2, 1fr);
+  align-items: center;
+  gap: 0 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
-  padding: 1rem;
   background-color: var(--clr-white);
-  justify-content: space-between;
+}
+
+.task-checkbox,
+.task-delete {
+  grid-row: span 2;
+}
+
+.task-description {
+  grid-column: 2 / -2;
 }
 
 .tasks-list {
   overflow-y: scroll;
-
   height: 300px;
+}
+
+.completed-task {
+  text-decoration: line-through;
+}
+
+.task-label {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .priority-cards,
@@ -280,6 +300,15 @@ li {
 .tasks-list::-webkit-scrollbar,
 .lists::-webkit-scrollbar {
   display: none;
+}
+
+.priority-highlight {
+  background-color: var(--clr-light-red);
+  height: fit-content;
+  width: fit-content;
+  padding: 0.2rem 0.5rem;
+  border-radius: 30px;
+  text-transform: capitalize;
 }
 
 .add-btn {

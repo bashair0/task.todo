@@ -1,4 +1,4 @@
-import Task from '../modules/task'
+/* import Task from '../modules/task' */
 import List from '../modules/lists'
 import Storage from '../utilities/storage'
 
@@ -15,6 +15,7 @@ export default class UI {
     this.addListForm = document.querySelector('[data-list-form]')
     this.plusButton = document.querySelector('[data-plus-btn]')
     this.listsContainer = document.querySelector('[data-my-lists]')
+    this.addTaskButton = document.querySelector('[data-add-task-btn]')
   }
 
   static eventListeners () {
@@ -34,6 +35,11 @@ export default class UI {
       if (event.target.closest('button')) {
         this.deleteList(event)
       }
+    })
+
+    this.addTaskButton.addEventListener('click', () => {
+      let taskName = prompt('Enter task name')
+      console.log(taskName)
     })
   }
 

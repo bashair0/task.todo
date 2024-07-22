@@ -123,7 +123,7 @@
             </button>
           </form>
           <ul class="lists" data-my-lists>
-            <li class="flex">
+            <!-- <li class="flex">
               Home work
               <button type="button" data-delete-list-btn>
                 <svg
@@ -136,7 +136,7 @@
                     d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
                 </svg>
               </button>
-            </li>
+            </li> -->
           </ul>
         </nav>
       </header>
@@ -169,16 +169,7 @@
         </div>
         <div class="taskslist-section">
           <h2>My tasks:</h2>
-          <ul class="tasks-list">
-            <li class="task-card flex">
-              <div class="flex">
-                <input type="checkbox" name="checked" id="task" />
-                <label for="task"><h3>Title</h3></label>
-              </div>
-              <span>Project name</span>
-              <span class="due-date">7.7.2024</span>
-            </li>
-          </ul>
+          <ul class="tasks-list"></ul>
         </div>
       </section>
       <section class="aside grid">
@@ -186,9 +177,32 @@
           <h2>July 2024</h2>
         </div>
         <div class="cta-btn">
-          <button type="button" class="btn add-btn">Add a new task</button>
+          <button type="button" class="btn add-btn" data-add-task-btn>
+            Add a new task
+          </button>
         </div>
       </section>
     </div>
+
+    <template data-task-card-template>
+      <li class="task-card completed-task">
+        <input type="checkbox" name="task" class="task-checkbox" />
+        <label class="task-label"></label>
+        <span class="priority-highlight"></span>
+        <span class="due-date"></span>
+        <button type="button" class="task-delete" data-delete-task-btn>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            height="20"
+            width="20"
+            id="cross">
+            <path
+              d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
+          </svg>
+        </button>
+        <p class="task-description"></p>
+      </li>
+    </template>
   </body>
 </html>
