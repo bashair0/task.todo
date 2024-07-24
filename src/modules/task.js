@@ -1,6 +1,8 @@
+/* import { generateId } from './generateId' */
+
 export default class Task {
-  constructor (name, description, dueDate, priority, parentListId) {
-    this.id = this.generateUniqueId()
+  constructor (id, name, description, dueDate, priority, parentListId) {
+    this.id = id
     ;(this.name = name),
       (this.description = description),
       (this.dueDate = dueDate),
@@ -9,12 +11,12 @@ export default class Task {
       (this.complete = false)
   }
 
-  generateUniqueId () {
+  /* generateUniqueId () {
     return (
       Date.now().toString(36) +
       Math.random().toString(36).substring(2, 12).padStart(12, 0)
     )
-  }
+  } */
 
   toggleCompleted () {
     this.completed = !this.completed
@@ -28,9 +30,9 @@ export default class Task {
       json.description,
       json.dueDate,
       json.priority,
-      json.parentProjectId
+      json.parentListId
     )
-    task.completed = json.completed
+    task.complete = json.complete
     return task
   }
 }

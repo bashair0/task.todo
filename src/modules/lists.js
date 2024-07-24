@@ -1,15 +1,11 @@
-export default class List {
-  constructor (listName) {
-    this.id = this.generateUniqueId()
-    this.listName = listName
-    this.tasks = []
-  }
+import Task from './task'
+import { generateId } from './generateId'
 
-  generateUniqueId () {
-    return (
-      Date.now().toString(36) +
-      Math.random().toString(36).substring(2, 12).padStart(12, 0)
-    )
+export default class List {
+  constructor (listName, id = generateId()) {
+    this.listName = listName
+    this.id = id
+    this.tasks = []
   }
 
   addTask (task) {
@@ -32,4 +28,24 @@ export default class List {
       return task.toggleCompleted()
     }
   }
+
+  toJSON () {
+    return {
+      listName: this.listName,
+      id: this.id,
+      tasks: this.tasks
+    }
+  }
+
+  static fromJSON (json) {
+    const list = new List(json.listName, json.id)
+    list.tasks = json.tasks.map(taskData => Task.fromJSON(taskData))
+    return list
+  }
+
+  /* static fromJSON (json) {
+    const list = new List(json.name)
+    list.tasks = json.tasks.map(taskData => Task.fromJSON(taskData))
+    return list
+  } */
 }

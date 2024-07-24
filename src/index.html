@@ -169,7 +169,7 @@
         </div>
         <div class="taskslist-section">
           <h2>My tasks:</h2>
-          <ul class="tasks-list"></ul>
+          <ul class="tasks-list" data-tasks-list-container></ul>
         </div>
       </section>
       <section class="aside grid">
@@ -184,7 +184,7 @@
       </section>
     </div>
     <div class="task-form hidden" data-task-form-container>
-      <form action="post" class="form-container">
+      <form action="post" class="form-container" data-task-form>
         <div class="form-header flex">
           <h1>Add task</h1>
           <button type="button" data-close-form-btn>
@@ -239,6 +239,7 @@
           <label for="parent-list">Parent list: </label>
           <select name="parent-list" id="parent-list" data-parent-list-input>
             <option value="inbox">inbox</option>
+            <option value="fitness">fitness</option>
           </select>
         </div>
 
@@ -249,11 +250,11 @@
     </div>
 
     <template data-task-card-template>
-      <li class="task-card completed-task">
+      <li class="task-card">
         <input type="checkbox" name="task" class="task-checkbox" />
         <label class="task-label"></label>
-        <span class="priority-highlight"></span>
-        <span class="due-date"></span>
+        <span class="priority-highlight" data-priority></span>
+        <span class="due-date" data-dueDate></span>
         <button type="button" class="task-delete" data-delete-task-btn>
           <svg
             xmlns="http://www.w3.org/2000/svg"

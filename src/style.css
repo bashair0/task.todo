@@ -342,6 +342,15 @@ li {
   padding: 1rem;
   display: grid;
   gap: 1rem;
+
+  input {
+    display: block;
+    border: 1px solid var(--clr-dark-grey);
+  }
+
+  input[type="text"] {
+    padding: 0.5rem;
+  }
 }
 
 .form-header {
@@ -358,15 +367,6 @@ li {
 
 textarea {
   height: 5rem;
-  padding: 0.5rem;
-}
-
-input {
-  display: block;
-  border: 1px solid var(--clr-dark-grey);
-}
-
-input[type="text"] {
   padding: 0.5rem;
 }
 
