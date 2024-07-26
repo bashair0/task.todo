@@ -280,8 +280,13 @@ li {
   height: 300px;
 }
 
-.completed-task {
+input[type="checkbox"]:checked {
+  accent-color: var(--clr-light-purple);
+}
+
+.task-card:has(input[type="checkbox"]:checked) {
   text-decoration: line-through;
+  opacity: 0.5;
 }
 
 .task-label {
@@ -303,7 +308,7 @@ li {
 }
 
 .priority-highlight {
-  background-color: var(--clr-light-red);
+  /*  background-color: var(--clr-light-red); */
   height: fit-content;
   width: fit-content;
   padding: 0.2rem 0.5rem;

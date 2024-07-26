@@ -3,7 +3,6 @@ import List from '../modules/lists'
 
 export default class Storage {
   static LOCAL_STORAGE_LIST_KEY = 'task.lists'
-  static LOCAL_STORAGE_TASK_KEY = 'task'
   static loadLists () {
     let lists =
       JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_LIST_KEY)) || []
@@ -52,6 +51,35 @@ export default class Storage {
     const list = lists.find(lst => lst.id === listId)
     if (list) {
       list.addTask(task)
+      this.updateList(list)
+    }
+  }
+
+  static updateTask (taskId, listId, updatedTask) {
+    const list = this.getList(listId)
+    if (list) {
+      if (listId !== updatedTask.parentListId) {
+        this.removeTaskFromList(taskId, listId)
+        this.addTaskToList(updatedTask, updatedTask.parentListId)
+      } else {
+        list.editTask(taskId, updatedTask)
+        this.updateList(list)
+      }
+    }
+  }
+
+  static removeTaskFromList (taskId, listId) {
+    const list = this.getList(listId)
+    if (list) {
+      list.removeTask(taskId)
+      this.updateList(list)
+    }
+  }
+
+  static toggleTaskStatus (taskId, listId) {
+    const list = this.getList(listId)
+    if (list) {
+      list.toggleTaskStatus(taskId)
       this.updateList(list)
     }
   }

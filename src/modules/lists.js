@@ -25,15 +25,8 @@ export default class List {
   toggleTaskStatus (taskId) {
     const task = this.tasks.find(task => task.id === taskId)
     if (task) {
-      return task.toggleCompleted()
-    }
-  }
-
-  toJSON () {
-    return {
-      listName: this.listName,
-      id: this.id,
-      tasks: this.tasks
+      let toggleTask = task.toggleCompleted()
+      return toggleTask
     }
   }
 
@@ -42,10 +35,4 @@ export default class List {
     list.tasks = json.tasks.map(taskData => Task.fromJSON(taskData))
     return list
   }
-
-  /* static fromJSON (json) {
-    const list = new List(json.name)
-    list.tasks = json.tasks.map(taskData => Task.fromJSON(taskData))
-    return list
-  } */
 }

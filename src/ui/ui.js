@@ -57,6 +57,28 @@ export default class UI {
     this.submitTaskButton.addEventListener('click', event => {
       this.createNewTask(event)
     })
+
+    this.tasksContainer.addEventListener('click', event => {
+      if (event.target.closest('button')) {
+        this.deleteTask(event)
+      }
+      if (event.target.tagName.toLowerCase() === 'input') {
+        this.toggleTaskStatus(event)
+      }
+    })
+  }
+
+  static deleteTask (event) {
+    let selectedTaskId = event.target.closest('li').dataset.taskId
+    let parentListId = event.target.closest('li').dataset.parentId
+    Storage.removeTaskFromList(selectedTaskId, parentListId)
+    this.renderTasks()
+  }
+
+  static toggleTaskStatus (event) {
+    let selectedTaskId = event.target.closest('li').dataset.taskId
+    let parentListId = event.target.closest('li').dataset.parentId
+    Storage.toggleTaskStatus(selectedTaskId, parentListId)
   }
 
   static createNewTask (event) {
@@ -85,16 +107,16 @@ export default class UI {
     })
 
     if (!taskNameInput || !taskPriorityValue || !taskDueDateInput) return
+    let parentListId = this.getParentListId(taskParentListInput)
     const newTask = new Task(
       generateId(),
       taskNameInput,
       taskDescriptionInput,
       taskDueDateInput,
       taskPriorityValue,
-      taskParentListInput
+      parentListId
     )
-    let parentListId = this.getParentListId(taskParentListInput)
-    console.log(this.getParentListId(taskParentListInput))
+
     Storage.addTaskToList(newTask, parentListId)
 
     this.renderTasks()
@@ -113,54 +135,11 @@ export default class UI {
     return listId
   }
 
-  static renderTasks () {
-    const lists = Storage.loadLists()
-
-    this.tasksContainer.innerHTML = ''
-    lists.forEach(list => {
-      list.tasks.forEach(task => {
-        const taskElement = document.importNode(
-          this.taskCardTemplate.content,
-          true
-        )
-        const li = taskElement.querySelector('li')
-        this.renderCompleteTask(li)
-        const checkbox = taskElement.querySelector('input')
-        checkbox.id = task.id
-        checkbox.checked = task.complete
-        checkbox.dataset.taskId = task.id
-        const label = taskElement.querySelector('label')
-        label.classList.add('task-label')
-        label.htmlFor = task.id
-        label.append(task.name)
-        const deleteButton = taskElement.querySelector('button')
-        deleteButton.dataset.taskId = task.id
-        const priorityTextElement = taskElement.querySelector('[data-priority]')
-        priorityTextElement.textContent = task.priority
-        const dueDateTextElement = taskElement.querySelector('[data-dueDate]')
-        dueDateTextElement.textContent = task.dueDate
-        const p = taskElement.querySelector('p')
-        p.textContent = task.description
-
-        this.tasksContainer.appendChild(taskElement)
-      })
-    })
-  }
-
   static render () {
     this.clearElement(this.listsContainer)
     this.renderLists()
     this.renderListsOption()
     this.renderTasks()
-  }
-
-  static renderCompleteTask (liElement) {
-    const lists = Storage.loadLists()
-    lists.forEach(list => {
-      list.tasks.forEach(task => {
-        if (task.complete) liElement.classList.add('completed-task')
-      })
-    })
   }
 
   static toggleNewListForm () {
@@ -224,6 +203,54 @@ export default class UI {
       console.log(`${list.listName}: ${list.id}`)
       this.listsContainer.appendChild(li)
     })
+  }
+
+  static renderTasks () {
+    const lists = Storage.loadLists()
+
+    this.tasksContainer.innerHTML = ''
+    lists.forEach(list => {
+      list.tasks.forEach(task => {
+        const taskElement = document.importNode(
+          this.taskCardTemplate.content,
+          true
+        )
+        const li = taskElement.querySelector('li')
+        li.dataset.parentId = task.parentListId
+        li.dataset.taskId = task.id
+        const checkbox = taskElement.querySelector('input')
+        checkbox.id = task.id
+        checkbox.checked = task.complete
+
+        const label = taskElement.querySelector('label')
+        label.classList.add('task-label')
+        label.htmlFor = task.id
+        label.append(task.name)
+        const priorityTextElement = taskElement.querySelector('[data-priority]')
+        priorityTextElement.textContent = task.priority
+        this.setPriorityColor(priorityTextElement, task.priority)
+        const dueDateTextElement = taskElement.querySelector('[data-dueDate]')
+        dueDateTextElement.textContent = task.dueDate
+        const p = taskElement.querySelector('p')
+        p.textContent = task.description
+
+        this.tasksContainer.appendChild(taskElement)
+      })
+    })
+  }
+
+  static setPriorityColor (element, value) {
+    switch (value) {
+      case 'high':
+        element.classList.add('urgent-important')
+        break
+      case 'mid':
+        element.classList.add('urgent')
+        break
+      case 'low':
+        element.classList.add('important')
+        break
+    }
   }
 
   static renderListsOption () {

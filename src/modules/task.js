@@ -19,8 +19,9 @@ export default class Task {
   } */
 
   toggleCompleted () {
-    this.completed = !this.completed
-    return this.completed
+    this.complete = !this.complete
+    /* console.log(`from task class: ${this.complete}`) */
+    return this.complete
   }
 
   static fromJSON (json) {

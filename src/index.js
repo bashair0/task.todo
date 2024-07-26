@@ -9,4 +9,10 @@ import Storage from './utilities/storage'
 
 UI.initialize()
 
+const task = new Task('123', 'laundry', 'sasas', '2-2-3023', 'high', '212')
+task.toggleCompleted()
+console.log(`from main: ${task.complete}`)
+task.toggleCompleted()
+console.log(`from main 2: ${task.complete}`)
+
 /* Storage.clear() */
