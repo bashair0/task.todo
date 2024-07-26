@@ -7,6 +7,7 @@
   --clr-pale-purple: hsl(289, 100%, 97%);
   --clr-light-purple: hsl(248, 100%, 91%);
   --clr-light-red: hsl(357, 100%, 95%);
+
   --clr-light-yellow: hsl(34, 57%, 95%);
   --clr-very-light-grey: hsl(220, 2%, 98%);
   --clr-light-grey: hsl(240, 9%, 78%);
@@ -218,6 +219,7 @@ li {
 }
 
 .priority-card {
+  background-color: var(--clr-light-purple);
   height: 8rem;
   width: 15rem;
   padding: 1rem;
@@ -241,9 +243,15 @@ li {
   background-color: var(--clr-light-blue);
 }
 
-.card-title {
-  color: var(--clr-dark-blue);
+.card-header {
   justify-content: space-between;
+}
+
+.card-title {
+  /* color: var(--clr-dark-blue); */
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
   margin-bottom: 0.4rem;
 }
 
@@ -284,9 +292,14 @@ input[type="checkbox"]:checked {
   accent-color: var(--clr-light-purple);
 }
 
-.task-card:has(input[type="checkbox"]:checked) {
+.task-card:has(input[type="checkbox"]:checked),
+.priority-card:has(input[type="checkbox"]:checked) {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.invisible-checkbox {
+  display: none;
 }
 
 .task-label {

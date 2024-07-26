@@ -153,18 +153,21 @@
 
         <div class="priority-section">
           <h2>High priority tasks:</h2>
-          <ul class="priority-cards grid">
-            <li class="priority-card urgent">
-              <a href="">
-                <h3 class="card-title flex">
-                  Title <span class="due-date">7.7.2024</span>
-                </h3>
+          <ul class="priority-cards grid" data-high-priority-container>
+            <!-- <li class="priority-card urgent-important">
+              <input
+                type="checkbox"
+                name="task-completion"
+                id="task-completion"
+                class="invisible-checkbox" />
+              <label for="task-completion" class="card-title flex"
+                >Title <span class="due-date">7.7.2024</span></label
+              >
 
-                <p class="card-description">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
-              </a>
-            </li>
+              <p class="card-description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </li> -->
           </ul>
         </div>
         <div class="taskslist-section">
@@ -267,6 +270,21 @@
           </svg>
         </button>
         <p class="task-description"></p>
+      </li>
+    </template>
+
+    <template data-high-priority-task>
+      <li class="priority-card urgent-important">
+        <input
+          type="checkbox"
+          name="task-completion"
+          class="invisible-checkbox" />
+        <div class="card-header flex">
+          <label class="card-title" data-card-title> </label>
+          <span class="due-date" data-DueDate></span>
+        </div>
+
+        <p class="card-description"></p>
       </li>
     </template>
   </body>

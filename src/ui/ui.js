@@ -2,6 +2,7 @@ import Task from '../modules/task'
 import List from '../modules/lists'
 import Storage from '../utilities/storage'
 import { generateId } from '../modules/generateId'
+import { isToday, isTomorrow, isYesterday, formatDistanceToNow } from 'date-fns'
 
 export default class UI {
   static selectedList
@@ -25,6 +26,12 @@ export default class UI {
     this.submitTaskButton = document.querySelector('[data-submit-task-btn]')
     this.taskCardTemplate = document.querySelector('[data-task-card-template]')
     this.tasksContainer = document.querySelector('[data-tasks-list-container]')
+    this.highPriorityTaskTemplate = document.querySelector(
+      '[data-high-priority-task]'
+    )
+    this.highPriorityTaskContainer = document.querySelector(
+      '[data-high-priority-container]'
+    )
   }
 
   static eventListeners () {
@@ -72,6 +79,7 @@ export default class UI {
     this.clearElement(this.listsContainer)
     this.renderLists()
     this.renderListsOption()
+
     this.renderAllTasks()
   }
 
@@ -112,6 +120,22 @@ export default class UI {
     })
   }
 
+  static renderHighPriorityTasks () {
+    const lists = Storage.loadLists()
+
+    this.highPriorityTaskContainer.innerHTML = ''
+    lists.forEach(list => {
+      list.tasks.forEach(task => {
+        let dueDate = this.formatDueDate(task.dueDate)
+        if (!task.complete) {
+          if (dueDate === 'Today' || dueDate === 'Tomorrow') {
+            this.createHighPriorityTaskCard(task)
+          }
+        }
+      })
+    })
+  }
+
   static deleteList (event) {
     let removeListId = event.target.closest('li').dataset.listId
     Storage.removeList(removeListId)
@@ -137,6 +161,7 @@ export default class UI {
     let selectedTaskId = event.target.closest('li').dataset.taskId
     let parentListId = event.target.closest('li').dataset.parentId
     Storage.toggleTaskStatus(selectedTaskId, parentListId)
+    this.renderTasks()
   }
 
   static createNewTask (event) {
@@ -230,11 +255,26 @@ export default class UI {
   static renderAllTasks () {
     const lists = Storage.loadLists()
     this.tasksContainer.innerHTML = ''
+    this.renderHighPriorityTasks()
     lists.forEach(list => {
       list.tasks.forEach(task => {
         this.createTaskCard(task)
       })
     })
+  }
+
+  static formatDueDate (dueDate) {
+    const date = new Date(dueDate)
+
+    if (isToday(date)) {
+      return 'Today'
+    } else if (isTomorrow(date)) {
+      return 'Tomorrow'
+    } else if (isYesterday(date)) {
+      return 'Yesterday'
+    } else {
+      return formatDistanceToNow(date, { addSuffix: true })
+    }
   }
 
   static createTaskCard (task) {
@@ -247,18 +287,41 @@ export default class UI {
     checkbox.checked = task.complete
 
     const label = taskElement.querySelector('label')
-    label.classList.add('task-label')
+    /* label.classList.add('task-label') */
     label.htmlFor = task.id
     label.append(task.name)
     const priorityTextElement = taskElement.querySelector('[data-priority]')
     priorityTextElement.textContent = task.priority
     this.setPriorityColor(priorityTextElement, task.priority)
     const dueDateTextElement = taskElement.querySelector('[data-dueDate]')
-    dueDateTextElement.textContent = task.dueDate
+    dueDateTextElement.textContent = this.formatDueDate(task.dueDate)
     const p = taskElement.querySelector('p')
     p.textContent = task.description
 
     this.tasksContainer.appendChild(taskElement)
+  }
+
+  static createHighPriorityTaskCard (task) {
+    const cardTemplate = document.importNode(
+      this.highPriorityTaskTemplate.content,
+      true
+    )
+    const liElement = cardTemplate.querySelector('li')
+    liElement.dataset.parentId = task.parentListId
+    liElement.dataset.taskId = task.id
+    this.setPriorityColor(liElement, task.priority)
+    const checkbox = cardTemplate.querySelector('input')
+    checkbox.id = task.id
+    checkbox.checked = task.complete
+    const label = cardTemplate.querySelector('[data-card-title]')
+    label.htmlFor = task.id
+    label.append(task.name)
+    const dueDateSpan = cardTemplate.querySelector('[data-DueDate]')
+    dueDateSpan.textContent = this.formatDueDate(task.dueDate)
+    const p = cardTemplate.querySelector('p')
+    p.textContent = task.description
+
+    this.highPriorityTaskContainer.appendChild(cardTemplate)
   }
 
   static setPriorityColor (element, value) {
