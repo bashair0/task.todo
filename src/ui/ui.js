@@ -2,7 +2,14 @@ import Task from '../modules/task'
 import List from '../modules/lists'
 import Storage from '../utilities/storage'
 import { generateId } from '../modules/generateId'
-import { isToday, isTomorrow, isYesterday, formatDistanceToNow } from 'date-fns'
+import {
+  isToday,
+  isTomorrow,
+  isYesterday,
+  isPast,
+  formatDistanceToNow,
+  format
+} from 'date-fns'
 
 export default class UI {
   static selectedList
@@ -26,12 +33,13 @@ export default class UI {
     this.submitTaskButton = document.querySelector('[data-submit-task-btn]')
     this.taskCardTemplate = document.querySelector('[data-task-card-template]')
     this.tasksContainer = document.querySelector('[data-tasks-list-container]')
-    this.highPriorityTaskTemplate = document.querySelector(
-      '[data-high-priority-task]'
-    )
-    this.highPriorityTaskContainer = document.querySelector(
-      '[data-high-priority-container]'
-    )
+
+    this.dashboardButton = document.querySelector('[data-dashboard-btn]')
+    this.todayButton = document.querySelector('[data-today-btn]')
+    this.upcomingButton = document.querySelector('[data-upcoming-btn]')
+    /* this.calendarButton = document.querySelector('[data-cal-btn]') */
+    this.tasksListHeader = document.querySelector('[data-list-name]')
+    this.currentDateTextElement = document.querySelector('[data-current-date]')
   }
 
   static eventListeners () {
@@ -73,14 +81,53 @@ export default class UI {
         this.toggleTaskStatus(event)
       }
     })
+
+    this.dashboardButton.addEventListener('click', () => {
+      this.renderAllTasks()
+    })
+
+    this.todayButton.addEventListener('click', () => {
+      this.renderTodayTasks()
+    })
+
+    this.upcomingButton.addEventListener('click', () => {
+      this.renderUpcomingTasks()
+    })
+
+    /* this.calendarButton.addEventListener('click', () => {
+      this.tasksListHeader.textContent = 'calendar: '
+    }) */
+  }
+
+  static getCurrentDate () {
+    const date = new Date()
+
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+    let fullDate = `${year}-${month}-${day}`
+    return format(fullDate, 'dd MMM yyyy')
   }
 
   static render () {
+    this.currentDateTextElement.textContent = this.getCurrentDate()
     this.clearElement(this.listsContainer)
     this.renderLists()
     this.renderListsOption()
-
     this.renderAllTasks()
+  }
+
+  static renderActiveNavButton (activeButton) {
+    const navButtons = document.querySelectorAll('.nav-btn')
+
+    navButtons.forEach(button => {
+      if (button.id === activeButton) {
+        button.classList.add('active-btn')
+      } else {
+        button.classList.remove('active-btn')
+      }
+    })
   }
 
   static toggleNewListForm () {
@@ -94,7 +141,7 @@ export default class UI {
     if (!inputValue || inputValue == null) return
 
     const newList = new List(inputValue)
-    newList.addTask = newList.addTask.toString()
+    /* newList.addTask = newList.addTask.toString() */
     newListInput.value = null
     Storage.addList(newList)
     this.render()
@@ -113,6 +160,7 @@ export default class UI {
     this.tasksContainer.innerHTML = ''
     lists.forEach(list => {
       if (list.id === listId) {
+        this.tasksListHeader.textContent = `${list.listName}`
         list.tasks.forEach(task => {
           this.createTaskCard(task)
         })
@@ -120,17 +168,29 @@ export default class UI {
     })
   }
 
-  static renderHighPriorityTasks () {
+  static renderTodayTasks () {
     const lists = Storage.loadLists()
 
-    this.highPriorityTaskContainer.innerHTML = ''
+    this.tasksContainer.innerHTML = ''
+    this.tasksListHeader.textContent = `Today's tasks:`
     lists.forEach(list => {
       list.tasks.forEach(task => {
-        let dueDate = this.formatDueDate(task.dueDate)
-        if (!task.complete) {
-          if (dueDate === 'Today' || dueDate === 'Tomorrow') {
-            this.createHighPriorityTaskCard(task)
-          }
+        if (this.formatDueDate(task.dueDate) === 'Today') {
+          this.createTaskCard(task)
+        }
+      })
+    })
+  }
+
+  static renderUpcomingTasks () {
+    const lists = Storage.loadLists()
+
+    this.tasksContainer.innerHTML = ''
+    this.tasksListHeader.textContent = `Upcoming tasks:`
+    lists.forEach(list => {
+      list.tasks.forEach(task => {
+        if (!isPast(task.dueDate)) {
+          this.createTaskCard(task)
         }
       })
     })
@@ -232,7 +292,10 @@ export default class UI {
       const li = document.createElement('li')
       li.dataset.listId = list.id
       li.classList.add('flex')
-      li.innerHTML = `${list.listName}
+      if (list.id === '1xx') {
+        li.textContent = list.listName
+      } else {
+        li.innerHTML = `${list.listName}
               <button type="button" data-delete-list-btn>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -244,10 +307,12 @@ export default class UI {
                     d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
                 </svg>
               </button>`
+      }
+
       if (list.id === this.selectedList) {
         li.classList.add('active-list')
       }
-      console.log(`${list.listName}: ${list.id}`)
+
       this.listsContainer.appendChild(li)
     })
   }
@@ -255,7 +320,7 @@ export default class UI {
   static renderAllTasks () {
     const lists = Storage.loadLists()
     this.tasksContainer.innerHTML = ''
-    this.renderHighPriorityTasks()
+    this.tasksListHeader.textContent = 'All tasks:'
     lists.forEach(list => {
       list.tasks.forEach(task => {
         this.createTaskCard(task)
@@ -287,41 +352,19 @@ export default class UI {
     checkbox.checked = task.complete
 
     const label = taskElement.querySelector('label')
-    /* label.classList.add('task-label') */
     label.htmlFor = task.id
     label.append(task.name)
     const priorityTextElement = taskElement.querySelector('[data-priority]')
-    priorityTextElement.textContent = task.priority
+    priorityTextElement.textContent = `${task.priority} priority`
     this.setPriorityColor(priorityTextElement, task.priority)
     const dueDateTextElement = taskElement.querySelector('[data-dueDate]')
-    dueDateTextElement.textContent = this.formatDueDate(task.dueDate)
+    dueDateTextElement.textContent = `dueDate: ${this.formatDueDate(
+      task.dueDate
+    )}`
     const p = taskElement.querySelector('p')
     p.textContent = task.description
 
     this.tasksContainer.appendChild(taskElement)
-  }
-
-  static createHighPriorityTaskCard (task) {
-    const cardTemplate = document.importNode(
-      this.highPriorityTaskTemplate.content,
-      true
-    )
-    const liElement = cardTemplate.querySelector('li')
-    liElement.dataset.parentId = task.parentListId
-    liElement.dataset.taskId = task.id
-    this.setPriorityColor(liElement, task.priority)
-    const checkbox = cardTemplate.querySelector('input')
-    checkbox.id = task.id
-    checkbox.checked = task.complete
-    const label = cardTemplate.querySelector('[data-card-title]')
-    label.htmlFor = task.id
-    label.append(task.name)
-    const dueDateSpan = cardTemplate.querySelector('[data-DueDate]')
-    dueDateSpan.textContent = this.formatDueDate(task.dueDate)
-    const p = cardTemplate.querySelector('p')
-    p.textContent = task.description
-
-    this.highPriorityTaskContainer.appendChild(cardTemplate)
   }
 
   static setPriorityColor (element, value) {

@@ -1,5 +1,4 @@
 import List from '../modules/lists'
-/* import Task from '../modules/task' */
 
 export default class Storage {
   static LOCAL_STORAGE_LIST_KEY = 'task.lists'

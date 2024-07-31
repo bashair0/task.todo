@@ -1,5 +1,3 @@
-/* import { generateId } from './generateId' */
-
 export default class Task {
   constructor (id, name, description, dueDate, priority, parentListId) {
     this.id = id
@@ -11,16 +9,8 @@ export default class Task {
       (this.complete = false)
   }
 
-  /* generateUniqueId () {
-    return (
-      Date.now().toString(36) +
-      Math.random().toString(36).substring(2, 12).padStart(12, 0)
-    )
-  } */
-
   toggleCompleted () {
     this.complete = !this.complete
-    /* console.log(`from task class: ${this.complete}`) */
     return this.complete
   }
 

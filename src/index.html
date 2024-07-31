@@ -12,7 +12,11 @@
         <nav class="nav">
           <ul class="main-nav">
             <li>
-              <button type="button" class="btn nav-btn active-btn flex">
+              <button
+                id="dashboard"
+                type="button"
+                class="btn nav-btn active-btn flex"
+                data-dashboard-btn>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   enable-background="new 0 0 24 24"
@@ -29,7 +33,11 @@
               </button>
             </li>
             <li>
-              <button type="button" class="btn nav-btn flex">
+              <button
+                id="today"
+                type="button"
+                class="btn nav-btn flex"
+                data-today-btn>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -49,7 +57,11 @@
               </button>
             </li>
             <li>
-              <button type="button" class="btn nav-btn flex">
+              <button
+                id="upcoming"
+                type="button"
+                class="btn nav-btn flex"
+                data-upcoming-btn>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -62,8 +74,12 @@
                 Upcoming
               </button>
             </li>
-            <li>
-              <button type="button" class="btn nav-btn flex">
+            <!-- <li>
+              <button
+                id="cal"
+                type="button"
+                class="btn nav-btn flex"
+                data-cal-btn>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -75,7 +91,7 @@
                 </svg>
                 Calender
               </button>
-            </li>
+            </li> -->
           </ul>
 
           <h3 class="my-lists flex">
@@ -122,22 +138,7 @@
               Add
             </button>
           </form>
-          <ul class="lists" data-my-lists>
-            <!-- <li class="flex">
-              Home work
-              <button type="button" data-delete-list-btn>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  height="20"
-                  width="20"
-                  id="cross">
-                  <path
-                    d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"></path>
-                </svg>
-              </button>
-            </li> -->
-          </ul>
+          <ul class="lists" data-my-lists></ul>
         </nav>
       </header>
       <section class="main">
@@ -151,33 +152,14 @@
             aria-label="notifications"></button>
         </div>
 
-        <div class="priority-section">
-          <h2>High priority tasks:</h2>
-          <ul class="priority-cards grid" data-high-priority-container>
-            <!-- <li class="priority-card urgent-important">
-              <input
-                type="checkbox"
-                name="task-completion"
-                id="task-completion"
-                class="invisible-checkbox" />
-              <label for="task-completion" class="card-title flex"
-                >Title <span class="due-date">7.7.2024</span></label
-              >
-
-              <p class="card-description">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </p>
-            </li> -->
-          </ul>
-        </div>
         <div class="taskslist-section">
-          <h2>My tasks:</h2>
+          <h2 class="tasks-header" data-list-name>My tasks:</h2>
           <ul class="tasks-list" data-tasks-list-container></ul>
         </div>
       </section>
       <section class="aside grid">
         <div class="calendar">
-          <h2>July 2024</h2>
+          <h2 data-current-date>July 2024</h2>
         </div>
         <div class="cta-btn">
           <button type="button" class="btn add-btn" data-add-task-btn>
@@ -270,21 +252,6 @@
           </svg>
         </button>
         <p class="task-description"></p>
-      </li>
-    </template>
-
-    <template data-high-priority-task>
-      <li class="priority-card urgent-important">
-        <input
-          type="checkbox"
-          name="task-completion"
-          class="invisible-checkbox" />
-        <div class="card-header flex">
-          <label class="card-title" data-card-title> </label>
-          <span class="due-date" data-DueDate></span>
-        </div>
-
-        <p class="card-description"></p>
       </li>
     </template>
   </body>
